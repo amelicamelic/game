@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一览表</title>
+    <!-- Tailwind CSS v3 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#60a5fa',
+                        secondary: '#f472b6',
+                        accent: '#34d399',
+                        neutral: '#f3f4f6',
+                        'neutral-dark': '#9ca3af'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                        'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .card-transition {
+                transition: all 0.3s ease;
+            }
+            .modal-transition {
+                transition: opacity 0.3s ease, transform 0.3s ease;
+            }
+            .avatar-hover {
+                transition: transform 0.3s ease, filter 0.3s ease;
+            }
+            .avatar-hover:hover {
+                transform: scale(1.05);
+                filter: brightness(1.05);
+            }
+        }
+    </style>
+</head>
+<body class="bg-neutral min-h-screen font-sans text-gray-800">
+    <div class="container mx-auto px-4 py-12">
+        <h1 class="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-800">主控角色</h1>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            <!-- 角色卡片 1 -->
+            <div class="character-card card-transition bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover">
+                <div class="p-4 flex flex-col items-center cursor-pointer" onclick="openModal(0)">
+                    <div class="w-40 h-40 rounded-full overflow-hidden mb-4 avatar-hover">
+                        <img src="https://p5-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/15a2a19e49ae47ac989a868e11a8fd91~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=202603122219466293C3BBDCF2115072E7&rrcfp=f06b921b&x-expires=1775917199&x-signature=EVIIuJxv8buoVaFhu89AlWiCCec%3D" 
+                             alt="角色1" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-lg font-semibold text-center">藺木 京花</h3>
+                </div>
+            </div>
+
+            <!-- 角色卡片 2 -->
+            <div class="character-card card-transition bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover">
+                <div class="p-4 flex flex-col items-center cursor-pointer" onclick="openModal(1)">
+                    <div class="w-40 h-40 rounded-full overflow-hidden mb-4 avatar-hover">
+                        <img src="./鵺野 東鄉/IMG_4231.JPG" 
+                             alt="角色2" 
+                             class="w-full h-full object-cover">
+                    </div> 
+                    <h3 class="text-lg font-semibold text-center">鵺野 東鄉</h3>
+                </div>
+            </div>
+
+            <!-- 角色卡片 3 -->
+            <div class="character-card card-transition bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover">
+                <div class="p-4 flex flex-col items-center cursor-pointer" onclick="openModal(2)">
+                    <div class="w-40 h-40 rounded-full overflow-hidden mb-4 avatar-hover">
+                        <img src="./神々廻 光来/IMG_4195.JPG" 
+                             alt="角色3" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-lg font-semibold text-center">神々廻 光来</h3>
+                </div>
+            </div>
+
+            <!-- 角色卡片 4 -->
+            <div class="character-card card-transition bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover">
+                <div class="p-4 flex flex-col items-center cursor-pointer" onclick="openModal(3)">
+                    <div class="w-40 h-40 rounded-full overflow-hidden mb-4 avatar-hover">
+                        <img src="./舛添 孤鳥/IMG_4203.JPG" 
+                             alt="角色4" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-lg font-semibold text-center">舛添 孤鳥</h3>
+                </div>
+            </div>
+
+            <!-- 角色卡片 5 -->
+            <div class="character-card card-transition bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover">
+                <div class="p-4 flex flex-col items-center cursor-pointer" onclick="openModal(4)">
+                    <div class="w-40 h-40 rounded-full overflow-hidden mb-4 avatar-hover">
+                        <img src="./犬堂 隆一/1.png" 
+                             alt="角色5" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-lg font-semibold text-center">犬堂 隆一</h3>
+                </div>
+            </div>
+
+            <!-- 角色卡片 6 -->
+            <div class="character-card card-transition bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover">
+                <div class="p-4 flex flex-col items-center cursor-pointer" onclick="openModal(5)">
+                    <div class="w-40 h-40 rounded-full overflow-hidden mb-4 avatar-hover">
+                        <img src="./昼神 倫丸/1.png" 
+                             alt="角色6" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-lg font-semibold text-center">昼神 倫丸</h3>
+                </div>
+            </div>
+
+            <!-- 角色卡片 7 -->
+            <div class="character-card card-transition bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover">
+                <div class="p-4 flex flex-col items-center cursor-pointer" onclick="openModal(6)">
+                    <div class="w-40 h-40 rounded-full overflow-hidden mb-4 avatar-hover">
+                        <img src="https://p5-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/ab9ba6e6cfad4a348a7e2698f8655440~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260312222404CECC67A05C3410F307E&rrcfp=f06b921b&x-expires=1775917371&x-signature=W69SDOvTj2xNnVVsomlFC0CLsUk%3D" 
+                             alt="角色7" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-lg font-semibold text-center">一 一</h3>
+                </div>
+            </div>
+
+            <!-- 角色卡片 8 -->
+            <div class="character-card card-transition bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover">
+                <div class="p-4 flex flex-col items-center cursor-pointer" onclick="openModal(7)">
+                    <div class="w-40 h-40 rounded-full overflow-hidden mb-4 avatar-hover">
+                        <img src="https://p5-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/fe9ddd06fc2e4dd6b24d05909f3d14d1~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260312222404CECC67A05C3410F307E&rrcfp=f06b921b&x-expires=1775917371&x-signature=tyZywhDHJsGN5u0rS%2BTQ4VgqWxQ%3D" 
+                             alt="角色8" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-lg font-semibold text-center">花屋敷 夏樹</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 角色详情模态框 -->
+    <div id="characterModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-xl max-w-md w-full mx-4 overflow-hidden modal-transition transform scale-95 opacity-0" id="modalContent">
+            <div class="relative">
+                <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors">
+                    <i class="fa fa-times text-xl"></i>
+                </button>
+                
+                <div class="p-6">
+                    <div class="flex flex-col items-center mb-6">
+                        <div class="w-48 h-48 rounded-full overflow-hidden mb-4 border-4 border-primary">
+                            <img id="modalAvatar" src="" alt="角色头像" class="w-full h-full object-cover">
+                        </div>
+                        <h2 id="modalName" class="text-2xl font-bold text-center"></h2>
+                    </div>
+                    
+                    <div class="bg-neutral rounded-lg p-4 mb-4">
+                        <h3 class="text-lg font-semibold mb-2 flex items-center">
+                            <i class="fa fa-info-circle mr-2 text-primary"></i>角色介绍
+                        </h3>
+                        <p id="modalDescription" class="text-gray-700"></p>
+                    </div>
+                    
+                    <div class="bg-neutral rounded-lg p-4">
+                        <h3 class="text-lg font-semibold mb-2 flex items-center">
+                            <i class="fa fa-star mr-2 text-secondary"></i>角色特点
+                        </h3>
+                        <ul id="modalTraits" class="text-gray-700 list-disc pl-5 space-y-1"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 角色数据
+        const characters = [
+            {
+                name: "藺木 京花",
+                avatar: "https://p5-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/15a2a19e49ae47ac989a868e11a8fd91~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=202603122219466293C3BBDCF2115072E7&rrcfp=f06b921b&x-expires=1775917199&x-signature=EVIIuJxv8buoVaFhu89AlWiCCec%3D",
+                description: "性格温和的藺木 京花，总是带着淡淡的微笑。她喜欢阅读和安静的环境，是图书馆的常客。虽然外表看起来有些柔弱，但内心坚强，有着自己的坚持和信念。",
+                traits: ["喜欢阅读", "性格温和", "内心坚强", "擅长绘画"]
+            },
+            {
+                name: "鵺野 東鄉",
+                avatar: "./鵺野 東鄉/IMG_4199.JPG",
+                description: "戴着圆框眼镜的少年，看起来有些严肃。他是一名学霸，对科学和技术有着浓厚的兴趣。虽然平时话不多，但一旦聊到自己感兴趣的话题就会变得热情起来。",
+                traits: ["科学爱好者", "学霸", "沉默寡言", "技术宅"]
+            },
+            {
+                name: "神々廻 光来",
+                avatar: "./神々廻 光来/IMG_4194.JPG",
+                description: "活泼开朗的神々廻 光来，总是充满活力和正能量。她喜欢结交朋友，是班级里的开心果。虽然有时候会有些冲动，但她的真诚和热情总能感染周围的人。",
+                traits: ["活泼开朗", "充满活力", "擅长社交", "喜欢唱歌"]
+            },
+            {
+                name: "舛添 孤鳥",
+                avatar: "./舛添 孤鳥/IMG_4191.JPG",
+                description: "外表冷峻的舛添 孤鳥，给人一种难以接近的感觉。但实际上他有着温柔的内心，只是不善于表达自己的情感。他有着出色的运动天赋，尤其擅长剑术和格斗。",
+                traits: ["外表冷峻", "内心温柔", "运动达人", "沉默寡言"]
+            },
+            {
+                name: "犬堂 隆一",
+                avatar: "./犬堂 隆一/2.png",
+                description: "神秘的犬堂 隆一，总是带着捉摸不透的微笑。她有着敏锐的洞察力，能够轻易看穿他人的想法。虽然平时显得有些疏离，但对信任的人会展现出温柔的一面。",
+                traits: ["神秘莫测", "洞察力强", "独立自主", "擅长推理"]
+            },
+            {
+                name: "昼神 倫丸",
+                avatar: "./昼神 倫丸/3.png",
+                description: "阳光开朗的昼神 倫丸，总是带着温暖的笑容。他喜欢帮助他人，是大家眼中的\"老好人\"。他有着广泛的兴趣爱好，尤其喜欢户外活动和摄影。",
+                traits: ["阳光开朗", "乐于助人", "爱好广泛", "擅长摄影"]
+            },
+            {
+                name: "一 一",
+                avatar: "https://p5-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/ab9ba6e6cfad4a348a7e2698f8655440~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260312222404CECC67A05C3410F307E&rrcfp=f06b921b&x-expires=1775917371&x-signature=W69SDOvTj2xNnVVsomlFC0CLsUk%3D",
+                description: "充满活力的一 一，总是精力充沛。她有着强烈的好奇心，喜欢尝试新事物。虽然有时候会显得有些鲁莽，但她的直率和真诚让人无法讨厌。",
+                traits: ["活力四射", "好奇心强", "直率坦诚", "擅长运动"]
+            },
+            {
+                name: "花屋敷 夏樹",
+                avatar: "https://p5-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/fe9ddd06fc2e4dd6b24d05909f3d14d1~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260312222404CECC67A05C3410F307E&rrcfp=f06b921b&x-expires=1775917371&x-signature=tyZywhDHJsGN5u0rS%2BTQ4VgqWxQ%3D",
+                description: "自信满满的花屋敷 夏樹，总是展现出不羁的气质。他有着出色的领导能力，能够带领团队克服困难。虽然有时候会显得有些自大，但他的实力确实不容小觑。",
+                traits: ["自信满满", "领导力强", "勇敢果断", "擅长演讲"]
+            }
+        ];
+
+        // 打开模态框
+        function openModal(index) {
+            const character = characters[index];
+            const modal = document.getElementById('characterModal');
+            const modalContent = document.getElementById('modalContent');
+            
+            // 填充角色数据
+            document.getElementById('modalAvatar').src = character.avatar;
+            document.getElementById('modalName').textContent = character.name;
+            document.getElementById('modalDescription').textContent = character.description;
+            
+            // 填充特点列表
+            const traitsList = document.getElementById('modalTraits');
+            traitsList.innerHTML = '';
+            character.traits.forEach(trait => {
+                const li = document.createElement('li');
+                li.textContent = trait;
+                traitsList.appendChild(li);
+            });
+            
+            // 显示模态框
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+            
+            // 禁止背景滚动
+            document.body.style.overflow = 'hidden';
+        }
+
+        // 关闭模态框
+        function closeModal() {
+            const modal = document.getElementById('characterModal');
+            const modalContent = document.getElementById('modalContent');
+            
+            // 隐藏模态框
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                // 恢复背景滚动
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        // 点击模态框外部关闭
+        document.getElementById('characterModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // 添加键盘事件
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !document.getElementById('characterModal').classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+
+        // 添加卡片悬停效果
+        document.querySelectorAll('.character-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.classList.add('transform', 'translate-y-[-5px]');
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.classList.remove('transform', 'translate-y-[-5px]');
+            });
+        });
+    </script>
+</body>
+</html>
