@@ -1,0 +1,1677 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>九柱神的奴隸</title>
+    <style>
+:root {
+    --bg:#f4f6fa;
+    --panel:#fff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --line:#e2e8f0;
+    --accent:#3859c7;
+    --accent2:#e8edff;
+    --danger:#b42318;
+    --good:#087f5b;
+}
+/* Chrome、Edge、Safari */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: none;
+}
+
+/* IE、舊版 Edge */
+* {
+  -ms-overflow-style: none;
+}
+* {
+    box-sizing:border-box
+}
+body {
+    margin:0;
+    background:var(--bg);
+    font:15px/1.5 system-ui,-apple-system,"Segoe UI","Noto Sans TC",sans-serif;
+    color:var(--text)
+}
+.wrap {
+    max-width:1660px;
+    margin:auto;
+    padding:28px 18px 50px
+}
+.head {
+    grid-column:1;
+    grid-row:1;
+    display:flex;
+    justify-content:flex-start;
+    align-items:flex-start;
+    gap:16px;
+    margin:0;
+    padding:0 0 8px;
+}
+.eyebrow {
+    font-size:12px;
+    letter-spacing:.12em;
+    color:var(--muted);
+    font-weight:700
+}
+.head h1 {
+    margin:4px 0 0;
+    font-size:clamp(24px,4vw,34px)
+}
+.head > div { min-width:0; }
+.head p {
+    margin:5px 0 0;
+    color:var(--muted)
+}
+.pill {
+    border:1px solid var(--line);
+    background:#fff;
+    border-radius:999px;
+    padding:8px 12px;
+    font-size:12px;
+    color:var(--muted);
+    white-space:nowrap
+}
+.layout {
+    display:grid;
+    position:relative;
+    grid-template-columns:230px minmax(0,1fr) 380px;
+    gap:18px;
+    align-items:start
+}
+.layout > .head { position:absolute; top:0; left:0; width:250px; }
+.layout > .eventnav { grid-column:1; grid-row:1; margin-top:132px; }
+.layout > section:not(.summary) { grid-column:2; grid-row:1; }
+.layout > .summary { grid-column:3; grid-row:1; }
+.eventnav {
+    position:sticky;
+    top:16px
+}
+.event-list {
+    display:grid;
+    gap:8px
+}
+.event-btn {
+    display:block;
+    width:100%;
+    text-align:left;
+    background:#fff;
+    border:1px solid var(--line);
+    color:var(--text);
+    padding:12px;
+    border-radius:12px
+}
+.event-btn.active {
+    background:var(--accent2);
+    border-color:#aebfff;
+    color:var(--accent)
+}
+.event-btn strong {
+    display:block;
+    font-size:14px
+}
+.event-btn span {
+    display:block;
+    font-size:12px;
+    color:var(--muted);
+    margin-top:3px
+}
+.event-note {
+    font-size:12px;
+    color:var(--muted);
+    margin:12px 0 0
+}
+.panel {
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:20px;
+    box-shadow:0 4px 18px #0f172a08
+}
+.panel h2 {
+    font-size:17px;
+    margin:0 0 16px
+}
+.section-head {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    margin-bottom:14px
+}
+.section-head h2 {
+    margin:0
+}
+button {
+    font:inherit;
+    border:0;
+    border-radius:10px;
+    padding:10px 14px;
+    cursor:pointer;
+    font-weight:650
+}
+.primary {
+    background:var(--accent);
+    color:white
+}
+.soft {
+    background:var(--accent2);
+    color:var(--accent)
+}
+.ghost {
+    background:#fff;
+    border:1px solid var(--line);
+    color:var(--text)
+}
+.small {
+    font-size:13px;
+    padding:7px 10px
+}
+.items {
+    display: grid;
+    gap: 12px;
+}
+
+
+.item {
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:14px
+}
+.itemtop {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px
+}
+.itemtitle {
+    font-weight:700
+}
+.fields {
+    display:grid;
+    grid-template-columns:minmax(140px,1.5fr) minmax(90px,.8fr) minmax(80px,.65fr);
+    gap:10px
+}
+.field {
+    display:flex;
+    flex-direction:column;
+    gap:5px
+}
+.field label {
+    font-size:12px;
+    color:var(--muted)
+}
+input,textarea,select {
+    width:100%;
+    font:inherit;
+    color:var(--text);
+    border:1px solid #cbd5e1;
+    border-radius:9px;
+    background:white;
+    padding:10px;
+    min-width:0
+}
+.line-total {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:12px;
+    padding-top:10px;
+    border-top:1px dashed var(--line);
+    font-size:13px;
+    color:var(--muted)
+}
+.line-total strong {
+    font-size:16px;
+    color:var(--text)
+}
+.summary {
+    position:sticky;
+    top:16px
+}
+.totalbox {
+    background:linear-gradient(135deg,#eef2ff,#f8faff);
+    border:1px solid #dbe4ff;
+    border-radius:14px;
+    padding:18px;
+    margin-bottom:18px
+}
+.bonus-box {
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:14px;
+    margin:0 0 18px;
+    background:#fff;
+}
+.bonus-box h2 { margin:0 0 12px; }
+.bonus-results { display:grid; gap:10px; }
+.bonus-row { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; font-size:13px; }
+.bonus-row span { color:var(--muted); }
+.bonus-row strong { color:var(--text); text-align:right; white-space:nowrap; }
+.bonus-note { font-size:12px; color:var(--muted); margin:10px 0 0; line-height:1.5; }
+.total-label {
+    color:#53618a;
+    font-size:13px
+}
+.total {
+    font-size:clamp(28px,4vw,36px);
+    font-weight:800;
+    letter-spacing:-.03em;
+    margin:3px 0 10px
+}
+.rows {
+    display:grid;
+    gap:10px
+}
+.sumrow {
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    color:var(--muted);
+    font-size:14px
+}
+.sumrow strong {
+    color:var(--text);
+    font-weight:650;
+    font-variant-numeric:tabular-nums
+}
+.rule {
+    height:1px;
+    background:var(--line);
+    margin:15px 0
+}
+.extras {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px
+}
+.hint {
+    font-size:12px;
+    color:var(--muted);
+    margin:14px 0 0
+}
+.bar {
+    height:7px;
+    background:#e2e8f0;
+    border-radius:999px;
+    overflow:hidden;
+    margin:9px 0
+}
+.bar span {
+    display:block;
+    height:100%;
+    width:0;
+    background:var(--good)
+}
+.status {
+    font-size:13px;
+    color:var(--muted)
+}
+.status.over {
+    color:var(--danger)
+}
+.product-demo {
+    display:grid;
+    grid-template-columns:88px minmax(0,1fr);
+    gap:12px;
+    align-items:center
+}
+.demo-img {
+    width:88px;
+    height:88px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:#f7f8fc;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden
+}
+.demo-img img {
+    width:100%;
+    height:100%;
+    object-fit:contain
+}
+.demo-img svg {
+    width:78px;
+    height:78px
+}
+.demo-name {
+    font-weight:750
+}
+.demo-price {
+    font-size:18px;
+    font-weight:800;
+    margin-top:4px
+}
+.demo-meta {
+    font-size:12px;
+    color:var(--muted)
+}
+.demo-qty {
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:9px
+}
+.demo-qty input {
+    width:80px;
+    padding:7px;
+    text-align:center
+}
+.filter {
+    display:flex;
+    gap:8px;
+    margin-bottom:14px;
+    align-items:center
+}
+.filter input {
+    flex:7 1 0;
+    width:0;
+    min-width:0
+}
+.filter select {
+    flex:3 1 0;
+    width:0;
+    min-width:0
+}
+.productgrid {
+    display:block
+}
+.category-group {
+    margin: 0 0 20px;
+    container-type: inline-size;
+}
+.category-heading {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    margin: 30px 0 30px;
+    color:#243247;
+    font-size:18px;
+    font-weight:800;
+}
+.category-heading::before,
+.category-heading::after {
+    content:"";
+    height:1px;
+    background:var(--line);
+    flex:1;
+}
+.category-items {
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    justify-content:stretch;
+    gap:10px;
+}
+/* 電腦版默認四列；只有實際容器寬度不足時才逐級減少列數 */
+@container (max-width: 645px) {
+  .category-items { grid-template-columns:repeat(3,minmax(0,1fr)); }
+}
+@container (max-width: 481px) {
+  .category-items { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@container (max-width: 317px) {
+  .category-items { grid-template-columns:minmax(0,1fr); }
+}
+.productcard {
+    border:1px solid var(--line);
+    border-radius:12px;
+    overflow:hidden
+}
+.productcard .art {
+    height:112px;
+    background:#f8f9fc;
+    display:flex;
+    align-items:center;
+    justify-content:center
+}
+.productcard .art img {
+    width:100%;
+    height:100%;
+    object-fit:contain
+}
+.productcard .art svg {
+    width:95px;
+    height:95px
+}
+.productcard .details {
+    padding:10px
+}
+.productcard .details strong {
+    display:block;
+    font-size:13px;
+    line-height:1.5
+}
+.productcard .details .product-name {
+    margin:0
+}
+.productcard .details .product-unit-total {
+    margin:0 0 8px;
+    font-size:13px;
+    line-height:1.5;
+    font-weight:700;
+    color:var(--text)
+}
+.productcard .details span {
+    display:block;
+    font-size:12px;
+    color:var(--muted);
+    margin-top:3px
+}
+.productcard .details input {
+    margin-top:8px;
+    padding:7px;
+    text-align:center
+}
+
+.product-info-row {
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:8px
+}
+.product-info-row input {
+    flex:0 0 52px;
+    width:52px;
+    max-width:52px;
+    margin-top:0;
+    padding:6px 2px;
+    text-align:center
+}
+.product-prices {
+    flex:1 1 auto;
+    min-width:0
+}
+.product-prices span {
+    display:block;
+    margin-top:3px
+}
+
+@media(max-width:1050px) {
+    .layout {
+    grid-template-columns:190px minmax(0,1fr)
+}
+.layout > .head { width:205px; }
+.layout > .eventnav { grid-column:1; grid-row:1; margin-top:132px; }
+.layout > section:not(.summary) { grid-column:2; grid-row:1; }
+.summary {
+    grid-column:2;
+    grid-row:2;
+    position:static
+}
+}
+@media(max-width:1200px) {
+    .layout {
+    grid-template-columns:1fr
+}
+.layout > .head { position:static; width:auto; }
+.layout > .head, .layout > .eventnav, .layout > section:not(.summary), .layout > .summary {
+    grid-column:1;
+    grid-row:auto;
+}
+.layout > .eventnav { margin-top:0; }
+.eventnav {
+    position:static
+}
+.event-list {
+    grid-template-columns:repeat(auto-fit,minmax(140px,1fr))
+}
+.summary {
+    grid-column:auto
+}
+.summary {
+    position:static
+}
+.head {
+    align-items:flex-start;
+    flex-direction:column
+}
+.fields {
+    grid-template-columns:1fr 1fr
+}
+.fields .namefield {
+    grid-column:1/-1
+}
+}
+@media(max-width:520px) {
+    .panel {
+    padding:15px
+}
+.wrap {
+    padding:18px 12px 35px
+}
+.extras {
+    grid-template-columns:1fr 1fr
+}
+.category-items {
+    grid-template-columns:repeat(auto-fill, 154px)
+}
+}
+ .collapse-toggle { display:flex; width:100%; align-items:center; justify-content:space-between; padding:0; border:0; background:transparent; color:inherit; font:inherit; font-weight:inherit; cursor:pointer; text-align:left; }
+.collapse-toggle span { font-size:20px; line-height:1; color:var(--muted, #64748b); }
+#extraFields.is-collapsed, #amountRows.is-collapsed, #budgetFields.is-collapsed { display:none; }
+
+.batch-open { flex: 0 0 auto; white-space: nowrap; padding: 10px 13px; background: var(--accent2); color: var(--accent); border: 0; border-radius: 9px; font-weight: 700; cursor: pointer; }
+.batch-overlay { position: fixed; inset: 0; z-index: 30; background: rgba(20,25,40,.42); display: flex; align-items: center; justify-content: center; padding: 18px; }
+.batch-overlay[hidden] { display: none !important; }
+.batch-dialog { width: min(460px, 100%); max-height: min(80vh, 700px); overflow: auto; background: white; color: #202438; border-radius: 16px; padding: 22px; box-shadow: 0 18px 60px rgba(0,0,0,.25); }
+.batch-title-row { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.batch-title-row h2 { margin:0; font-size:20px; }
+.batch-close { border:0; background:transparent; font-size:26px; cursor:pointer; color:#666; }
+.batch-dialog p { color:#6c7180; font-size:13px; }
+.batch-categories { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin:16px 0; }
+.batch-categories label { display:grid; grid-template-columns:20px minmax(0,1fr); align-items:center; justify-content:start; gap:10px; min-width:0; min-height:54px; border:1px solid #e0e4ed; border-radius:9px; padding:12px 14px; cursor:pointer; overflow-wrap:anywhere; }
+.batch-categories label input[type="checkbox"] { display:block; width:18px; height:18px; margin:0; justify-self:center; }
+.batch-categories label span { min-width:0; width:auto; white-space:normal; word-break:keep-all; }
+.batch-quantity-row { display:flex; align-items:center; justify-content:space-between; gap:16px; margin:12px 0 6px; }
+.batch-quantity-label { display:block; margin:0; font-weight:700; flex:1 1 auto; }
+#batchQuantity { flex:0 0 52px; width:52px; max-width:52px; margin-left:auto; box-sizing:border-box; text-align:center; }
+.batch-quantity-input-wrap { display:flex; align-items:center; gap:8px; flex:0 0 auto; }
+.batch-quantity-unit, .cart-qty-unit { white-space:nowrap; color:var(--muted, #64748b); }
+@media (max-width:420px) { .batch-quantity-row { align-items:center; } #batchQuantity { flex-basis:52px; width:52px; } }
+.batch-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:18px; }
+.batch-actions button { padding:9px 14px; border:1px solid #d8dce6; border-radius:8px; background:white; cursor:pointer; }
+.batch-actions .batch-confirm { background:var(--accent2); color:var(--accent); border-color:var(--accent2); }
+.batch-actions #cancelBatchAdd { background:#fff; color:var(--text); border-color:var(--line); }
+.cart-print-qty { display:none; }
+@page { margin: 8mm; }
+
+@media print {
+  body { background: white; color: #111; }
+  .wrap { max-width: none; padding: 0; }
+  .head, .eventnav, .view-switch, #viewProducts,
+  .cart-heading p, .summary .field, .summary .bar, .summary .extras,
+  #clear, #print, #exportCsv, .export-actions, .hint, .budget-status, .budget-heading, .extra-heading, #budgetStatus, #budgetHeadingRule, #extraHeadingRule, #budgetFields, #toggleBudget, #budget, #budgetFill, #budgetStatus + .rule, #extraFields, #toggleExtras, #toggleAmountRows { display: none !important; }
+  .layout { display: flex; flex-direction: column; gap: 16px; align-items: stretch; }
+  .panel { width: 100%; box-sizing: border-box; box-shadow: none; border: 1px solid #ddd; break-inside: auto; margin: 0; padding: 14px; }
+  #viewCart { display: block !important; }
+  .summary { position: static; }
+  .totalbox, .bonus-box { display: block !important; }
+  /* Keep each summary card together when paginating the PDF. The shopping cart remains unchanged. */
+  .totalbox, .bonus-box { break-inside: avoid !important; page-break-inside: avoid !important; }
+  .summary > h2.amount-heading { break-after: avoid !important; page-break-after: avoid !important; }
+  #amountRows { display: block !important; break-inside: avoid !important; page-break-inside: avoid !important; }
+  .sumrow { break-inside: avoid; }
+  .sumrow.print-zero { display: none !important; }
+  .cart-item, .cart-row { break-inside: avoid; }
+  .cart-remove, .batch-open, .batch-overlay { display: none !important; }
+  .cart-qty, .cart-qty-unit { display: none !important; }
+  .cart-print-qty { display: inline !important; font-size: 16px; font-weight: 800; white-space: nowrap; }
+  .cart-controls { gap: 0; }
+  .status{ display: none !important;  }
+  @page { margin: 0; }
+}
+
+.view-switch {
+  display: flex;
+  position: sticky;
+  top: 8px;
+  z-index: 5;
+  gap: 8px;
+  margin-bottom: 18px;
+  padding: 4px;
+  border-radius: 12px;
+  background: var(--soft, #f1f5f9);
+}
+.view-tab {
+  flex: 1;
+  border: 0;
+  border-radius: 9px;
+  padding: 11px 14px;
+  background: transparent;
+  color: var(--muted, #64748b);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.view-tab.active {
+  background: var(--surface, #fff);
+  color: var(--text, #172033);
+  box-shadow: 0 1px 4px rgba(15, 23, 42, .10);
+}
+#cartBadge {
+  display: inline-flex;
+  min-width: 22px;
+  height: 22px;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5px;
+  border-radius: 999px;
+  background: #087f5b;
+  color: #fff;
+  font-size: 12px;
+}
+.cart-heading h2 { margin: 0 0 5px; }
+.cart-heading p { margin: 0 0 16px; color: var(--muted, #64748b); }
+.cart-items { display: grid; gap: 10px; }
+.cart-row {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--line, #dce4f0);
+  border-radius: 14px;
+  background: var(--surface, #fff);
+}
+.cart-thumb {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #f1f5f9;
+}
+.cart-info { min-width: 0; display: grid; gap: 4px; }
+.cart-name { font-weight: 700; overflow-wrap: anywhere; }
+.cart-meta { color: var(--muted, #64748b); font-size: 13px; }
+.cart-controls { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
+.cart-qty {
+  width: 52px;
+  max-width: 52px;
+  text-align: center;
+  padding: 5px 7px;
+  border: 1px solid var(--line, #cbd5e1);
+  border-radius: 8px;
+  font: inherit;
+}
+.cart-price { text-align: right; font-weight: 800; white-space: nowrap; }
+.cart-remove {
+  border: 0;
+  background: transparent;
+  color: #b42318;
+  cursor: pointer;
+  padding: 4px;
+  font: inherit;
+  font-size: 13px;
+}
+.cart-empty { padding: 30px 12px; text-align: center; color: var(--muted, #64748b); }
+@media (max-width: 620px) {
+  .cart-row { grid-template-columns: 48px minmax(0, 1fr); }
+  .cart-thumb { width: 48px; height: 48px; }
+  .cart-price { grid-column: 2; text-align: left; }
+}
+
+
+[hidden] { display: none !important; }
+
+.add-to-cart {
+  width: 100%;
+  margin-top: 8px;
+  border: 0;
+  border-radius: 9px;
+  padding: 10px 12px;
+  background: #087f5b;
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.3s ease;
+}
+.add-to-cart:hover { filter: brightness(.8); }
+
+
+.eventnav-toggle {
+  display:flex; width:100%; align-items:center; justify-content:space-between;
+  padding:0; margin:0 0 16px; border:0; background:transparent; color:inherit;
+  font:inherit; font-size:17px; font-weight:700; text-align:left; cursor:pointer;
+}
+.eventnav-toggle span { display:none; color:var(--muted); font-size:20px; line-height:1; }
+@media (max-width:1200px) {
+  .eventnav-toggle span { display:inline; }
+  .eventnav-content.is-collapsed { display:none; }
+  .eventnav { position:static; }
+}
+
+
+/* Responsive layout fix: keep the activity directory below the title on narrow screens,
+   and never shrink product cards below the desktop card width. */
+@media screen and (max-width: 1200px) {
+  .layout {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 16px !important;
+  }
+  .layout > .head,
+  .layout > .eventnav,
+  .layout > section:not(.summary),
+  .layout > .summary {
+    position: static !important;
+    inset: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin-top: 0 !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+  }
+  .layout > .head { order: 0 !important; }
+  .layout > .eventnav { order: 1 !important; }
+  .layout > section:not(.summary) { order: 2 !important; min-width: 0 !important; }
+  .layout > .summary { order: 3 !important; }
+  .category-items {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    justify-content: stretch !important;
+  }
+  .productcard { width: auto !important; min-width: 0 !important; box-sizing: border-box !important; }
+}
+@container (max-width: 645px) {
+  .category-items { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+}
+@container (max-width: 481px) {
+  .category-items { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+@container (max-width: 317px) {
+  .category-items { grid-template-columns: minmax(0, 1fr) !important; }
+}
+
+</style></head>
+<body>
+  <div class="wrap">
+    <main class="layout">
+      <header class="head">
+        <div>
+          <div class="eyebrow">SLAVE TO ENNEAD</div>
+          <h1>九柱神的奴隸</h1>
+          <p>只是一個無情的All IN機器罷了。</p>
+        </div>
+      </header>
+      <aside class="panel eventnav">
+        <button type="button" class="eventnav-toggle" id="toggleEventNav" aria-expanded="false">活動目錄 <span id="eventNavChevron">＋</span></button>
+        <div class="eventnav-content is-collapsed" id="eventNavContent">
+          <div class="event-list" id="eventList"></div>
+          <p class="event-note">不同活動的商品、數量與費用分開計算，不會混在一起。</p>
+        </div>
+      </aside>
+      <section class="panel">
+        <div class="view-switch">
+          <button type="button" id="showProducts" class="view-tab active">商品目錄</button>
+          <button type="button" id="showCart" class="view-tab">購物清單 <span id="cartBadge">0</span></button>
+        </div>
+        <div id="viewProducts">
+        <div class="section-head">
+          <h2 id="eventTitle">商品清單</h2>
+          <span class="status" id="productCount">
+          </span>
+        </div>
+        <div class="filter">
+          <input id="search" placeholder="搜索商品名稱">
+          <select id="category">
+            <option value="">所有分類</option>
+          </select>
+          <button type="button" id="openBatchAdd" class="batch-open">批量加入</button>
+        </div>
+        <div class="productgrid" id="productGrid">
+        </div>
+        </div>
+        <div id="batchModal" class="batch-overlay" hidden>
+          <section class="batch-dialog" role="dialog" aria-modal="true" aria-labelledby="batchTitle">
+            <div class="batch-title-row"><h2 id="batchTitle">批量加入商品</h2><button type="button" id="closeBatchAdd" class="batch-close" aria-label="關閉">×</button></div>
+            <p>勾選要加入的分類，並設置每件商品增加的數量。</p>
+            <div id="batchCategories" class="batch-categories"></div>
+            <div class="batch-quantity-row"><label class="batch-quantity-label" for="batchQuantity">每件商品增加數量</label>
+            <div class="batch-quantity-input-wrap"><input id="batchQuantity" type="number" min="1" step="1" value="1"><span class="batch-quantity-unit">件</span></div></div>
+            <div class="batch-actions"><button type="button" id="cancelBatchAdd">取消</button><button type="button" id="confirmBatchAdd" class="batch-confirm">確定加入</button></div>
+          </section>
+        </div>
+        <div id="viewCart" hidden>
+          <div class="cart-heading">
+            <h2>購物清單</h2>
+            <p>當前活動加入購物清單的商品會顯示在這裡，可修改數量或移除。</p>
+          </div>
+          <div id="cartItems" class="cart-items"></div>
+        </div>
+      </section>
+      <aside class="panel summary">
+        <div class="totalbox">
+          <div class="total-label">消費總金額</div>
+          <div class="total" id="grandTotal">$0</div>
+          <div class="status" id="totalStatus">尚未設置預算</div>
+        </div>
+        <section class="bonus-box" id="bonusBox">
+          <h2>特典</h2>
+          <div id="bonusResults" class="bonus-results"></div>
+        </section>
+        <h2 class="amount-heading"><button type="button" id="toggleAmountRows" class="collapse-toggle" aria-expanded="false">金額明細 <span id="amountChevron">+</span></button></h2>
+        <div class="rows" id="amountRows">
+          <div class="sumrow">
+            <span>商品小計</span>
+            <strong id="subtotal">$0</strong>
+          </div>
+          <div class="sumrow">
+            <span>附加費合計</span>
+            <strong id="fees">$0</strong>
+          </div>
+          <div class="sumrow">
+            <span>代購費</span>
+            <strong id="proxyOut">$0</strong>
+          </div>
+          <div class="sumrow">
+            <span>運費</span>
+            <strong id="shippingOut">$0</strong>
+          </div>
+          <div class="sumrow">
+            <span>車馬費</span>
+            <strong id="travelOut">$0</strong>
+          </div>
+          <div class="sumrow">
+            <span>折扣</span>
+            <strong id="discountOut">−$0</strong>
+          </div>
+          <div class="sumrow">
+            <span>其他費用</span>
+            <strong id="otherOut">$0</strong>
+          </div>
+        </div>
+        <div class="rule" id="budgetHeadingRule">
+        </div>
+        <h2 class="budget-heading"><button type="button" id="toggleBudget" class="collapse-toggle" aria-expanded="false">預算設置 <span id="budgetChevron">+</span></button></h2>
+        <div id="budgetFields" class="budget-fields is-collapsed">
+          <div class="field">
+            <label for="budget">購物預算</label>
+            <input id="budget" type="number" min="0" step="1" placeholder="例如 50000">
+          </div>
+          <div class="bar">
+            <span id="budgetFill"></span>
+          </div>
+          <div class="status" id="budgetStatus">輸入預算以查看使用比例</div>
+        </div>
+        <div class="rule" id="extraHeadingRule">
+        </div>
+        <h2 class="extra-heading"><button type="button" id="toggleExtras" class="collapse-toggle" aria-expanded="false">額外費用 <span id="extrasChevron">+</span></button></h2>
+        <div class="extras" id="extraFields">
+          <div class="field">
+            <label for="proxyValue">代購費（金額）</label>
+            <input id="proxyValue" type="number" min="0" step="1" value="0">
+          </div>
+          <div class="field">
+            <label for="proxyPercent">代購費（比例）</label>
+            <select id="proxyPercent">
+              <option value="0">不按比例</option>
+              <option value="1">1%</option>
+              <option value="2">2%</option>
+              <option value="3">3%</option>
+              <option value="4">4%</option>
+              <option value="5">5%</option>
+              <option value="6">6%</option>
+              <option value="7">7%</option>
+              <option value="8">8%</option>
+              <option value="9">9%</option>
+              <option value="10">10%</option>
+              <option value="11">11%</option>
+              <option value="12">12%</option>
+              <option value="13">13%</option>
+              <option value="14">14%</option>
+              <option value="15">15%</option>
+              <option value="16">16%</option>
+              <option value="17">17%</option>
+              <option value="18">18%</option>
+              <option value="19">19%</option>
+              <option value="20">20%</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="travel">車馬費</label>
+            <input id="travel" type="number" min="0" step="1" value="0">
+          </div>
+          <div class="field">
+            <label for="discount">折扣</label>
+            <input id="discount" type="number" min="0" step="1" value="0">
+          </div>
+          <div class="field">
+            <label for="shipping">運費</label>
+            <input id="shipping" type="number" min="0" step="1" value="0">
+          </div>
+          <div class="field">
+            <label for="other">其他費用</label>
+            <input id="other" type="number" min="0" step="1" value="0">
+          </div>
+        </div>
+        <div class="rule">
+        </div>
+        <button class="ghost" id="clear" style="width:100%">清空所有商品數量</button>
+        <div class="export-actions" style="display:flex;gap:8px;margin-top:8px">
+          <button class="ghost" id="exportCsv" style="flex:1;min-width:0">導出 CSV</button>
+          <button class="soft" id="exportImage" style="flex:1;min-width:0;margin-top:0">圖片</button>
+          <button class="ghost" id="print" style="flex:1;min-width:0;margin-top:0">PDF</button>
+        </div>
+        <p class="hint">計算方式：商品單價 × 數量 + 單件附加費 × 數量，再加運費與其他費用、扣除折扣。</p>
+      </aside>
+    </main>
+  </div><script>
+/*
+固定商品資料直接寫在這裡，頁面打開後立即顯示。
+修改方法：替換範例名稱、價格、附加費、分類與圖片。
+圖片可用相對路徑（例如 "images/item01.jpg"），放在 HTML 同一資料夾的 images 資料夾。
+*/
+
+const EVENTS = [
+  {id:"eventA",name:"【平心】主題咖啡廳",currency:"$",description:"（26）10/23~11/15",products:[
+    {id:"a01",name:"【餐點】賽特的沙漠盛宴",price:380,fee:38,category:"餐點",priceLabel:"餐點",image:"./img/a/a01.jpg",color:"#e9e6ff",note:"紅酒燉牛肉佐麵包"},
+    {id:"a02",name:"【餐點】荷魯斯的特製愛心料理",price:380,fee:38,category:"餐點",priceLabel:"餐點",image:"./img/a/a02.jpg",color:"#ffe8dc",note:"香煎雞腿薑黃飯"},
+    {id:"a03",name:"【餐點】歐西里斯的開心農場",price:380,fee:38,category:"餐點",priceLabel:"餐點",image:"./img/a/a03.jpg",color:"#dff4ee",note:"燻鮭魚沙拉盤"},
+    {id:"a04",name:"【餐點】阿努比斯的秀髮",price:380,fee:38,category:"餐點",priceLabel:"餐點",image:"./img/a/a04.jpg",color:"#f8e9b9",note:"清炒海鮮墨魚麵"},
+    {id:"a05",name:"【甜點】賽特・尼羅紅曜",price:260,fee:26,category:"甜點",priceLabel:"甜點",image:"./img/a/a05.jpg",color:"#ddd",note:"蘋果圓可頌＋香草冰淇淋"},
+    {id:"a06",name:"【甜點】荷魯斯・天之羽翼",price:260,fee:26,category:"甜點",priceLabel:"甜點",image:"./img/a/a06.jpg",color:"#ddd",note:"藍莓巴斯克"},
+    {id:"a07",name:"【甜點】歐西里斯・冥王聖葉",price:260,fee:26,category:"甜點",priceLabel:"甜點",image:"./img/a/a07.jpg",color:"#ddd",note:"斑斕葉戚風蛋糕佐開心果醬"},
+    {id:"a08",name:"【甜點】阿努比斯・冥界曙光",price:260,fee:26,category:"甜點",priceLabel:"甜點",image:"./img/a/a08.jpg",color:"#ddd",note:"OREO巧克力香蕉鬆餅"},
+    {id:"a09",name:"【飲品】賽特・荒漠紅寶石",price:200,fee:20,category:"飲品",priceLabel:"飲品",image:"./img/a/a09.jpg",color:"#ddd",note:"紅心芭樂優酪乳"},
+    {id:"a10",name:"【飲品】荷魯斯・我愛看藍藍的天",price:200,fee:20,category:"飲品",priceLabel:"飲品",image:"./img/a/a10.jpg",color:"#ddd",note:"藍柑橘氣泡飲"},
+    {id:"a11",name:"【飲品】歐西里斯・綠意萌芽",price:200,fee:20,category:"飲品",priceLabel:"飲品",image:"./img/a/a11.jpg",color:"#ddd",note:"抹茶牛奶"},
+    {id:"a12",name:"【飲品】阿努比斯・小朋友的最愛",price:200,fee:20,category:"飲品",priceLabel:"飲品",image:"./img/a/a12.jpg",color:"#ddd",note:"熱可可牛奶"},
+    {id:"a13",name:"ENNEAD平裝版",price:285,fee:0,category:"書籍",priceLabel:"單本",image:"./img/a/a13.jpg",color:"#ddd",note:"備注"},
+    {id:"a14",name:"ENNEAD特裝版I",price:1380,fee:0,category:"書籍",priceLabel:"套裝",image:"./img/a/a14.jpg",color:"#ddd",note:"備注"},
+    {id:"a15",name:"ENNEAD特裝版II",price:1380,fee:0,category:"書籍",priceLabel:"套裝",image:"./img/a/a14.jpg",color:"#ddd",note:"備注"},
+    {id:"a16",name:"坐姿壓克力立牌",price:380,fee:0,category:"直購商品",priceLabel:"直購",image:"./img/a/a16.jpg",color:"#ddd",note:"備注"},
+    {id:"a17",name:"鏡面徽章展示立牌+閃底徽章組",price:480,fee:0,category:"直購商品",priceLabel:"直購",image:"./img/a/a17.jpg",color:"#ddd",note:"備注"},
+    {id:"a18",name:"三插壓克力立牌+心臟燙金透卡組",price:450,fee:0,category:"直購商品",priceLabel:"直購",image:"./img/a/a18.jpg",color:"#ddd",note:"備注"},
+    {id:"a19",name:"壓克力色紙",price:280,fee:0,category:"直購商品",priceLabel:"直購",image:"./img/a/a19.jpg",color:"#ddd",note:"備注"},
+    {id:"a20",name:"金屬名片座+羽毛燙金透卡卡組",price:520,fee:0,category:"直購商品",priceLabel:"直購",image:"./img/a/a20.jpg",color:"#ddd",note:"備注"},
+    {id:"a21",name:"【草莓冰淇淋】杯緣子",price:220,fee:0,category:"直購商品",priceLabel:"直購",image:"./img/a/a21-1.jpg",color:"#ddd",note:"備注"},
+    {id:"a22",name:"【薄巧冰淇淋】杯緣子",price:220,fee:0,category:"直購商品",priceLabel:"直購",image:"./img/a/a21-2.jpg",color:"#ddd",note:"備注"},
+    {id:"a23",name:"【橘子冰淇淋】杯緣子",price:220,fee:0,category:"直購商品",priceLabel:"直購",image:"./img/a/a21-3.jpg",color:"#ddd",note:"備注"},
+    {id:"a24",name:"鏤空透明金屬漆書簽（隨機）",price:280,fee:0,category:"可抱盒商品",priceLabel:"1枚入",image:"./img/a/a22.jpg",color:"#ddd",note:"備注"},
+    {id:"a25",name:"鏤空透明金屬漆書簽（套組）",price:1120,fee:0,category:"可抱盒商品",priceLabel:"整盒",image:"./img/a/a22.jpg",color:"#ddd",note:"備注"},
+    {id:"a26",name:"金屬紀念幣（隨機）",price:220,fee:0,category:"可抱盒商品",priceLabel:"1枚入",image:"./img/a/a24.jpg",color:"#ddd",note:"備注"},
+    {id:"a27",name:"金屬紀念幣（套組）",price:880,fee:0,category:"可抱盒商品",priceLabel:"整盒",image:"./img/a/a24.jpg",color:"#ddd",note:"備注"},
+    {id:"a28",name:"浮雕擴香石+小卡組",price:380,fee:0,category:"直購商品",priceLabel:"直購",image:"./img/a/a26.jpg",color:"#ddd",note:"備注"},
+    {id:"a29",name:"R18明信片組",price:320,fee:0,category:"直購商品",priceLabel:"直購",image:"./img/a/a27.jpg",color:"#ddd",note:"備注"},
+    {id:"a30",name:"迷你壓克力立牌（8款）",price:150,fee:0,category:"隨機商品",priceLabel:"1枚入",image:"./img/a/a28.jpg",color:"#ddd",note:"備注"},
+    {id:"a31",name:"閃底徽章（8款）",price:150,fee:0,category:"隨機商品",priceLabel:"1枚入",image:"./img/a/a29.jpg",color:"#ddd",note:"備注"},
+    {id:"a32",name:"角色閃卡（16款）",price:100,fee:0,category:"隨機商品",priceLabel:"2枚入",image:"./img/a/a30.jpg",color:"#ddd",note:"備注"},
+    {id:"a33",name:"名場面拍立得（16款）",price:100,fee:0,category:"隨機商品",priceLabel:"2枚入",image:"./img/a/a31.jpg",color:"#ddd",note:"備注"},
+    {id:"a34",name:"收藏相卡（16款）",price:50,fee:0,category:"隨機商品",priceLabel:"1枚入",image:"./img/a/a32.jpg",color:"#ddd",note:"備注"},
+    {id:"a35",name:"手工糖果罐",price:350,fee:0,category:"直購商品",priceLabel:"直購",image:"./img/a/a33.jpg",color:"#ddd",note:"備注"},
+  ]},
+  {id:"eventB",name:"【中外鉱業】AGF2026",currency:"¥",description:"（26）10/22~11/09",products:[
+    {id:"b01",name:"立牌（賽特）",price:2000,fee:200,category:"アクリルフィギュアスタンド",priceLabel:"直購",image:"./img/b/01.avif",color:"#e1eafa",note:"備注"},
+    {id:"b02",name:"立牌（荷魯斯）",price:2000,fee:200,category:"アクリルフィギュアスタンド",priceLabel:"直購",image:"./img/b/02.avif",color:"#e8e5f8",note:"備注"},
+    {id:"b03",name:"立牌（歐西里斯）",price:2000,fee:200,category:"アクリルフィギュアスタンド",priceLabel:"直購",image:"./img/b/03.avif",color:"#dff4ee",note:"備注"},
+    {id:"b04",name:"立牌（阿努比斯）",price:2000,fee:200,category:"アクリルフィギュアスタンド",priceLabel:"直購",image:"./img/b/04.avif",color:"#f8e9b9",note:"備注"},
+    {id:"b05",name:"吧唧（隨機）",price:600,fee:60,category:"トレーディンググリッター缶バッジ",priceLabel:"1枚入",image:"./img/b/05.avif",color:"#ddd",note:"備注"},
+    {id:"b06",name:"吧唧（套裝）",price:4800,fee:480,category:"トレーディンググリッター缶バッジ",priceLabel:"整盒",image:"./img/b/06.avif",color:"#ddd",note:"備注"},
+    {id:"b07",name:"透卡（隨機）",price:600,fee:60,category:"トレーディングクリアカード",priceLabel:"1枚入",image:"./img/b/07.avif",color:"#ddd",note:"備注"},
+    {id:"b08",name:"透卡（套裝）",price:4800,fee:480,category:"トレーディングクリアカード",priceLabel:"整盒",image:"./img/b/08.avif",color:"#ddd",note:"備注"},
+    {id:"b09",name:"鑰匙扣（賽特）",price:1600,fee:160,category:"チェンジングアクリルキーホルダー",priceLabel:"直購",image:"./img/b/09.avif",color:"#ddd",note:"備注"},
+    {id:"b10",name:"鑰匙扣（荷魯斯）",price:1600,fee:160,category:"チェンジングアクリルキーホルダー",priceLabel:"直購",image:"./img/b/10.avif",color:"#ddd",note:"備注"},
+    {id:"b11",name:"鑰匙扣（歐西里斯）",price:1600,fee:160,category:"チェンジングアクリルキーホルダー",priceLabel:"直購",image:"./img/b/11.webp",color:"#ddd",note:"備注"},
+    {id:"b12",name:"鑰匙扣（阿努比斯）",price:1600,fee:160,category:"チェンジングアクリルキーホルダー",priceLabel:"直購",image:"./img/b/12.webp",color:"#ddd",note:"備注"},
+    {id:"a13",name:"書擋（賽特）",price:3000,fee:300,category:"アクリルブックエンド",priceLabel:"直購",image:"./img/b/13.avif",color:"#ddd",note:"備注"},
+    {id:"a14",name:"書擋（荷魯斯）",price:3000,fee:300,category:"アクリルブックエンド",priceLabel:"直購",image:"./img/b/14.avif",color:"#ddd",note:"備注"},
+    {id:"a15",name:"書擋（歐西里斯）",price:3000,fee:300,category:"アクリルブックエンド",priceLabel:"直購",image:"./img/b/14.avif",color:"#ddd",note:"備注"},
+    {id:"a16",name:"書擋（阿努比斯）",price:3000,fee:300,category:"アクリルブックエンド",priceLabel:"直購",image:"./img/b/16.avif",color:"#ddd",note:"備注"},
+    {id:"a17",name:"收藏立牌（賽特）",price:1800,fee:180,category:"アクリルコレクションスタンド",priceLabel:"直購",image:"./img/b/17.avif",color:"#ddd",note:"備注"},
+    {id:"a18",name:"收藏立牌（荷魯斯）",price:1800,fee:180,category:"アクリルコレクションスタンド",priceLabel:"直購",image:"./img/b/18.avif",color:"#ddd",note:"備注"},
+    {id:"a19",name:"收藏立牌（歐西里斯）",price:1800,fee:180,category:"アクリルコレクションスタンド",priceLabel:"直購",image:"./img/b/19.avif",color:"#ddd",note:"備注"},
+    {id:"a20",name:"收藏立牌（阿努比斯）",price:1800,fee:180,category:"アクリルコレクションスタンド",priceLabel:"直購",image:"./img/b/20.avif",color:"#ddd",note:"備注"},
+  ]},
+  {id:"eventC",name:"活動 C｜春日市集",currency:"¥",description:"玩偶與生活用品",products:[
+    {id:"c01",name:"春日毛絨玩偶",price:2800,fee:300,category:"玩偶",priceLabel:"玩偶",image:"",color:"#f7dfe9",note:"示例商品"},
+    {id:"c02",name:"紀念托特包",price:1600,fee:200,category:"生活用品",priceLabel:"生活用品",image:"",color:"#dceafe",note:"示例商品"},
+    {id:"c03",name:"花園亞克力立牌",price:2100,fee:220,category:"周邊",priceLabel:"周邊",image:"",color:"#e2f3d8",note:"示例商品"}
+  ]}
+];
+
+const $=id=>document.getElementById(id), yen=n=>(activeEvent.currency||'$')+Math.round(Number(n)||0).toLocaleString('ja-JP');
+
+let activeEvent=EVENTS[0];
+
+let PRODUCTS=activeEvent.products;
+
+let cartQuantities = {};
+let draftQuantities = {};
+
+const eventStates={};
+
+function stateFor(ev){if(!eventStates[ev.id])eventStates[ev.id]={cartQuantities:{},proxyValue:0,proxyPercent:0,shipping:0,travel:0,discount:0,other:0,budget:0};return eventStates[ev.id]}
+
+function saveEventState(){const st=stateFor(activeEvent);st.cartQuantities={...cartQuantities};st.proxyValue=$('proxyValue').value;st.proxyPercent=$('proxyPercent').value;st.shipping=$('shipping').value;st.travel=$('travel').value;st.discount=$('discount').value;st.other=$('other').value;st.budget=$('budget').value}
+
+function switchEvent(id){saveEventState();activeEvent=EVENTS.find(e=>e.id===id)||EVENTS[0];PRODUCTS=activeEvent.products;
+const st=stateFor(activeEvent);cartQuantities=st.cartQuantities||{};draftQuantities={};PRODUCTS.forEach(p=>draftQuantities[p.id]=1);['proxyValue','proxyPercent','shipping','travel','discount','other','budget'].forEach(k=>$(k).value=st[k]??0);
+
+$('search').value='';
+$('category').innerHTML='<option value="">所有分類</option>';[...new Set(PRODUCTS.map(p=>p.category).filter(Boolean))].forEach(c=>{const o=node('option','',c);o.value=c;
+$('category').append(o)});
+renderEvents();
+$('eventTitle').textContent=activeEvent.name+'｜商品清單';
+render();
+calculate()}
+
+function renderEvents(){const host=
+$('eventList');host.innerHTML='';EVENTS.forEach(ev=>{const b=node('button','event-btn'+(ev.id===activeEvent.id?' active':''));b.type='button';b.append(node('strong','',ev.name),node('span','',ev.description+' · '+ev.products.length+' 件'));b.onclick=()=>switchEvent(ev.id);host.append(b)})}
+
+function node(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n}
+
+function artSvg(p){const palette=p.color||'#edf1ff';
+let svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="${p.name} 示意圖"><rect width="120" height="120" rx="16" fill="${palette}"/>`;if(p.category==="模型"){svg+='<ellipse cx="60" cy="95" rx="30" ry="7" fill="#000" opacity=".08"/><path d="M37 43 L29 23 L48 35 M83 43 L91 23 L72 35" fill="#fff" stroke="#8b83b8" stroke-width="3" stroke-linejoin="round"/><circle cx="60" cy="58" r="29" fill="#fff" stroke="#8b83b8" stroke-width="2"/><circle cx="49" cy="56" r="3" fill="#444"/><circle cx="71" cy="56" r="3" fill="#444"/><path d="M54 68 Q60 73 66 68" fill="none" stroke="#d78c9b" stroke-width="3" stroke-linecap="round"/><circle cx="45" cy="65" r="5" fill="#f2b8c7" opacity=".8"/><circle cx="75" cy="65" r="5" fill="#f2b8c7" opacity=".8"/>'}else if(p.category==="周邊"&&p.name.includes("徽章")){svg+='<circle cx="60" cy="60" r="37" fill="#fff" stroke="#d4a78f" stroke-width="4"/><circle cx="60" cy="60" r="29" fill="#ffd9c8"/><path d="M60 38 L66 52 L81 53 L70 63 L73 78 L60 70 L47 78 L50 63 L39 53 L54 52Z" fill="#d8896a"/>'}else if(p.category==="周邊"){svg+='<rect x="37" y="25" width="46" height="72" rx="5" fill="#fff" stroke="#78aa9e" stroke-width="3"/><circle cx="60" cy="48" r="13" fill="#bce6d9"/><path d="M45 78 Q60 56 75 78" fill="#8fcdbb"/><path d="M46 25 L60 14 L74 25" fill="none" stroke="#78aa9e" stroke-width="3"/>'}else if(p.category==="書籍"){svg+='<path d="M31 23 Q48 19 60 29 Q72 19 89 23 L89 93 Q72 89 60 99 Q48 89 31 93Z" fill="#fff" stroke="#c4a85c" stroke-width="3"/><path d="M60 29 L60 99" stroke="#c4a85c" stroke-width="2"/><circle cx="48" cy="52" r="8" fill="#f3d98a"/><path d="M70 45 H81 M70 54 H81 M70 63 H81" stroke="#c4a85c" stroke-width="3" stroke-linecap="round"/>'}else if(p.category==="玩偶"){svg+='<circle cx="60" cy="48" r="28" fill="#fff" stroke="#d4a0b7" stroke-width="3"/><circle cx="39" cy="29" r="12" fill="#fff" stroke="#d4a0b7" stroke-width="3"/><circle cx="81" cy="29" r="12" fill="#fff" stroke="#d4a0b7" stroke-width="3"/><circle cx="50" cy="47" r="3" fill="#555"/><circle cx="70" cy="47" r="3" fill="#555"/><ellipse cx="60" cy="57" rx="6" ry="4" fill="#e6a8c0"/><rect x="39" y="72" width="42" height="27" rx="13" fill="#fff" stroke="#d4a0b7" stroke-width="3"/>'}else{svg+='<path d="M35 48 L35 96 L85 96 L85 48 L75 48 L75 37 Q75 20 60 20 Q45 20 45 37 L45 48" fill="#fff" stroke="#8ba9d7" stroke-width="4" stroke-linejoin="round"/><path d="M49 39 Q49 28 60 28 Q71 28 71 39" fill="none" stroke="#8ba9d7" stroke-width="4"/><path d="M49 64 H71 M49 74 H71" stroke="#8ba9d7" stroke-width="3" stroke-linecap="round"/>'}return svg+'</svg>'}
+
+function render() {
+  const host = $('productGrid');
+  const query = $('search').value.trim().toLowerCase();
+  const category = $('category').value;
+  host.innerHTML = '';
+
+  const filtered = PRODUCTS.filter(product =>
+    (!category || product.category === category) &&
+    [product.name, product.category, product.id].join(' ').toLowerCase().includes(query)
+  );
+
+  $('productCount').textContent = filtered.length + ' 件商品';
+
+  if (!filtered.length) {
+    host.append(node('div', 'status', '沒有符合的商品。'));
+    return;
+  }
+
+  const groups = new Map();
+  filtered.forEach(product => {
+    const key = product.category || '其他';
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(product);
+  });
+
+  groups.forEach((products, categoryName) => {
+    const group = node('section', 'category-group');
+    group.append(node('h3', 'category-heading', categoryName));
+    const grid = node('div', 'category-items');
+
+    products.forEach(product => {
+      const card = node('article', 'productcard');
+      const art = node('div', 'art');
+
+      if (product.image) {
+        const image = node('img');
+        // Enable anonymous CORS before requesting remote thumbnails so canvas export
+        // can read them when the image host permits cross-origin access.
+        if (/^https?:\/\//i.test(product.image)) image.crossOrigin = 'anonymous';
+        image.src = product.image;
+        image.alt = product.name;
+        image.onerror = () => { art.innerHTML = artSvg(product); };
+        art.append(image);
+      } else {
+        art.innerHTML = artSvg(product);
+      }
+
+      const details = node('div', 'details');
+      const productName = node('strong', 'product-name', product.name);
+      const productTotal = node('strong', 'product-unit-total', yen((Number(product.price) || 0) + (Number(product.fee) || 0)));
+      details.append(productName, productTotal);
+
+      const infoRow = node('div', 'product-info-row');
+      const quantity = node('input');
+      quantity.type = 'number';
+      quantity.min = '0';
+      quantity.step = '1';
+      quantity.value = draftQuantities[product.id] ?? 1;
+      quantity.setAttribute('aria-label', product.name + '購買數量');
+      quantity.oninput = () => {
+        draftQuantities[product.id] = Math.max(0, Math.floor(Number(quantity.value) || 0));
+      };
+
+      const prices = node('div', 'product-prices');
+      prices.append(
+        node('span', '', (product.priceLabel ?? '商品') + ' · ' + yen(product.price)),
+        node('span', '', '附加費 ' + yen(product.fee || 0))
+      );
+      infoRow.append(quantity, prices);
+
+      const addButton = node('button', 'add-to-cart', '加入購物清單');
+      addButton.type = 'button';
+      addButton.onclick = () => {
+        const quantityToAdd = Math.max(0, Math.floor(Number(draftQuantities[product.id]) || 1));
+        if (quantityToAdd === 0) { quantity.focus(); return; }
+        cartQuantities[product.id] = (cartQuantities[product.id] || 0) + quantityToAdd;
+        saveEventState();
+        renderCart();
+        calculate();
+        addButton.textContent = '已加入';
+        window.setTimeout(() => { addButton.textContent = '加入購物清單'; }, 900);
+      };
+
+      details.append(infoRow, addButton);
+      card.append(art, details);
+      grid.append(card);
+    });
+
+    group.append(grid);
+    host.append(group);
+  });
+}
+
+function renderCart() {
+  const host = $('cartItems');
+  if (!host) return;
+  host.innerHTML = '';
+
+  const chosen = PRODUCTS.filter(product => (cartQuantities[product.id] || 0) > 0);
+  const count = chosen.reduce((sum, product) => sum + (cartQuantities[product.id] || 0), 0);
+  $('cartBadge').textContent = count;
+
+  if (chosen.length === 0) {
+    host.innerHTML = '<div class="cart-empty">購物清單還是空的。先到商品目錄選擇數量吧。</div>';
+    return;
+  }
+
+  chosen.forEach(product => {
+    const quantity = cartQuantities[product.id] || 0;
+    const lineTotal = (Number(product.price) + Number(product.fee || 0)) * quantity;
+    const row = document.createElement('div');
+    row.className = 'cart-row';
+
+    const thumb = document.createElement('img');
+    thumb.className = 'cart-thumb';
+    thumb.alt = product.name;
+    if (product.image) {
+      // crossOrigin must be set before src; this preserves the original thumbnail.
+      if (/^https?:\/\//i.test(product.image)) thumb.crossOrigin = 'anonymous';
+      thumb.src = product.image;
+    }
+    else if (product.art) {
+      thumb.src = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(product.art);
+    }
+
+    const info = document.createElement('div');
+    info.className = 'cart-info';
+
+    const name = document.createElement('div');
+    name.className = 'cart-name';
+    name.textContent = product.name;
+
+    const meta = document.createElement('div');
+    meta.className = 'cart-meta';
+    meta.textContent = '單價 ' + yen(product.price) + ' · 單件附加費 ' + yen(product.fee || 0);
+
+    const controls = document.createElement('div');
+    controls.className = 'cart-controls';
+
+    const qty = document.createElement('input');
+    qty.className = 'cart-qty';
+    qty.type = 'number';
+    qty.min = '0';
+    qty.step = '1';
+    qty.value = quantity;
+    qty.setAttribute('aria-label', product.name + '數量');
+    const qtyUnit = document.createElement('span');
+    qtyUnit.className = 'cart-qty-unit';
+    qtyUnit.textContent = '件';
+    const printQty = document.createElement('span');
+    printQty.className = 'cart-print-qty';
+    printQty.textContent = quantity + ' 件';
+    qty.addEventListener('change', () => {
+      const nextQuantity = Math.max(0, Math.floor(Number(qty.value) || 0));
+      if (nextQuantity > 0) cartQuantities[product.id] = nextQuantity;
+      else delete cartQuantities[product.id];
+      saveEventState();
+      renderCart();
+      calculate();
+      render();
+    });
+
+    const remove = document.createElement('button');
+    remove.type = 'button';
+    remove.className = 'cart-remove';
+    remove.textContent = '移除';
+    remove.addEventListener('click', () => {
+      delete cartQuantities[product.id];
+      saveEventState();
+      renderCart();
+      calculate();
+      render();
+    });
+
+    controls.append(qty, qtyUnit, printQty, remove);
+    info.append(name, meta, controls);
+
+    const price = document.createElement('div');
+    price.className = 'cart-price';
+    price.textContent = yen(lineTotal);
+
+    row.append(thumb, info, price);
+    host.append(row);
+  });
+}
+
+function openBatchModal() {
+  const host = $('batchCategories');
+  host.innerHTML = '';
+  [...new Set(PRODUCTS.map(p => p.category || '其他'))].forEach((category, index) => {
+    const label = document.createElement('label');
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox'; checkbox.value = category; checkbox.name = 'batchCategory';
+    checkbox.id = 'batchCategory' + index;
+    label.append(checkbox, document.createTextNode(category));
+    host.append(label);
+  });
+  $('batchQuantity').value = '1';
+  $('batchModal').hidden = false;
+}
+function closeBatchModal() { $('batchModal').hidden = true; }
+$('openBatchAdd').addEventListener('click', openBatchModal);
+$('closeBatchAdd').addEventListener('click', closeBatchModal);
+$('cancelBatchAdd').addEventListener('click', closeBatchModal);
+$('batchModal').addEventListener('click', e => { if (e.target === $('batchModal')) closeBatchModal(); });
+$('confirmBatchAdd').addEventListener('click', () => {
+  const selected = [...$('batchCategories').querySelectorAll('input[name="batchCategory"]:checked')].map(el => el.value);
+  const quantity = Math.max(0, Math.floor(Number($('batchQuantity').value) || 0));
+  if (!selected.length) { alert('請至少勾選一個分類。'); return; }
+  if (!quantity) { $('batchQuantity').focus(); return; }
+  const matches = PRODUCTS.filter(p => selected.includes(p.category || '其他'));
+  matches.forEach(p => { cartQuantities[p.id] = (cartQuantities[p.id] || 0) + quantity; });
+  saveEventState(); renderCart(); calculate(); render(); closeBatchModal();
+});
+
+function switchView(view) {
+  const cartVisible = view === 'cart';
+  $('viewProducts').hidden = cartVisible;
+  $('viewProducts').style.display = cartVisible ? 'none' : 'block';
+  $('viewCart').hidden = !cartVisible;
+  $('viewCart').style.display = cartVisible ? 'block' : 'none';
+  $('showProducts').classList.toggle('active', !cartVisible);
+  $('showCart').classList.toggle('active', cartVisible);
+  if (cartVisible) renderCart();
+}
+
+function renderBonuses() {
+  const box = $('bonusBox');
+  const results = $('bonusResults');
+  if (!box || !results) return;
+
+  const addRow = (label, value) => {
+    const row = node('div', 'bonus-row');
+    row.append(node('span', '', label), node('strong', '', value));
+    results.append(row);
+  };
+
+  results.innerHTML = '';
+  if (activeEvent.id === 'eventA') {
+    let mealCount = 0;
+    let dessertCount = 0;    
+    let merchBookAmount = 0;
+    PRODUCTS.forEach(product => {
+      const quantity = Number(cartQuantities[product.id]) || 0;
+      if (product.category === '餐點') mealCount += quantity;
+      if (product.category === '甜點' || product.category === '飲品') dessertCount += quantity;      
+      if (product.category === '直購商品' || product.category === '可抱盒商品' || product.category === '隨機商品') {
+        merchBookAmount += (Number(product.price) || 0) * quantity;
+      }
+    });
+    addRow('主餐特典（每個餐點 1 枚）', mealCount + ' 枚');
+    addRow('杯墊特典（每個甜品 1 枚）', dessertCount + ' 枚');   
+    addRow('滿額特典（周邊商品每 $500）', Math.floor(merchBookAmount / 500) + ' 枚');
+    addRow('燈箱特典（周邊商品滿 $2,500）', merchBookAmount >= 2500 ? '1 個' : '0 個');
+    const note = node('p', 'bonus-note', '燈箱特典達到門檻後僅計 1 個，不累贈。');
+    results.append(note);
+    box.hidden = false;
+  } else if (activeEvent.id === 'eventB') {
+    let spending = 0;
+    PRODUCTS.forEach(product => {
+      spending += (Number(product.price) || 0) * (Number(cartQuantities[product.id]) || 0);
+    });
+    addRow('滿額特典（每累計消費 ' + yen(3000) + '）', Math.floor(spending / 3000) + ' 枚');
+    const note = node('p', 'bonus-note', '按購物清單內商品金額累計計算，不含附加費及其他費用。');
+    results.append(note);
+    box.hidden = false;
+  } else {
+    box.hidden = true;
+  }
+}
+
+function calculate() {
+  let items = 0;
+  let fees = 0;
+
+  PRODUCTS.forEach(product => {
+    const quantity = cartQuantities[product.id] || 0;
+    items += (Number(product.price) || 0) * quantity;
+    fees += (Number(product.fee) || 0) * quantity;
+  });
+
+  const proxyValue = Math.max(0, Number($('proxyValue').value) || 0);
+  const proxyPercent = Number($('proxyPercent').value) || 0;
+  const proxyFee = proxyValue + items * proxyPercent / 100;
+  const shipping = Math.max(0, Number($('shipping').value) || 0);
+  const travel = Math.max(0, Number($('travel').value) || 0);
+  const discount = Math.max(0, Number($('discount').value) || 0);
+  const other = Math.max(0, Number($('other').value) || 0);
+  const budget = Math.max(0, Number($('budget').value) || 0);
+  const total = Math.max(
+    0,
+    items + fees + proxyFee + shipping + travel + other - discount
+  );
+
+  renderCart();
+
+  $('subtotal').textContent = yen(items);
+  $('fees').textContent = yen(fees);
+  $('proxyOut').textContent = yen(proxyFee);
+  $('shippingOut').textContent = yen(shipping);
+  $('travelOut').textContent = yen(travel);
+  $('discountOut').textContent = '−' + yen(discount);
+  $('otherOut').textContent = yen(other);
+  $('grandTotal').textContent = yen(total);
+  renderBonuses();
+
+  $('totalStatus').textContent = budget
+    ? (total <= budget
+      ? '預算剩餘 ' + yen(budget - total)
+      : '超出預算 ' + yen(total - budget))
+    : '尚未設置預算';
+
+  $('budgetFill').style.width = budget
+    ? Math.min(100, total / budget * 100) + '%'
+    : '0';
+  $('budgetFill').style.background =
+    budget && total > budget ? '#b42318' : '#087f5b';
+  $('budgetStatus').textContent = budget
+    ? '已使用 ' + Math.round(total / budget * 100) + '%（'
+      + yen(total) + '／' + yen(budget) + '）'
+    : '輸入預算以查看使用比例';
+
+  saveEventState();
+}
+
+
+$('toggleEventNav').addEventListener('click', () => {
+  const content = $('eventNavContent');
+  const collapsed = content.classList.toggle('is-collapsed');
+  $('toggleEventNav').setAttribute('aria-expanded', String(!collapsed));
+  $('eventNavChevron').textContent = collapsed ? '＋' : '−';
+});
+
+$('extraFields').classList.add('is-collapsed');
+$('amountRows').classList.add('is-collapsed');
+$('budgetFields').classList.add('is-collapsed');
+$('toggleBudget').addEventListener('click', () => {
+  const fields = $('budgetFields');
+  const collapsed = fields.classList.toggle('is-collapsed');
+  $('toggleBudget').setAttribute('aria-expanded', String(!collapsed));
+  $('budgetChevron').textContent = collapsed ? '+' : '−';
+});
+$('toggleExtras').addEventListener('click', () => {
+  const fields = $('extraFields');
+  const collapsed = fields.classList.toggle('is-collapsed');
+  $('toggleExtras').setAttribute('aria-expanded', String(!collapsed));
+  $('extrasChevron').textContent = collapsed ? '+' : '−';
+});
+$('toggleAmountRows').addEventListener('click', () => {
+  const rows = $('amountRows');
+  const collapsed = rows.classList.toggle('is-collapsed');
+  $('toggleAmountRows').setAttribute('aria-expanded', String(!collapsed));
+  $('amountChevron').textContent = collapsed ? '+' : '−';
+});
+$('showProducts').addEventListener('click', () => switchView('products'));
+$('showCart').addEventListener('click', () => switchView('cart'));
+switchView('products');
+$('search').oninput = render;
+$('category').onchange = render;
+$('proxyPercent').onchange = calculate;
+['proxyValue', 'shipping', 'travel', 'discount', 'other', 'budget'].forEach(id => { $(id).oninput = calculate; });
+$('clear').onclick = () => { cartQuantities = {}; saveEventState(); render(); renderCart(); calculate(); };
+function exportCurrentEventCsv() {
+  const date = new Date();
+  const exportDate = date.getFullYear() + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + String(date.getDate()).padStart(2, '0');
+  const headers = ['導出日期', '商品名', '數量', '價格', '附加費', '總金額'];
+  const rows = [headers];
+  const csvEscape = value => {
+    const text = String(value ?? '');
+    return /[",\r\n]/.test(text) ? '"' + text.replace(/"/g, '""') + '"' : text;
+  };
+  const addProductRow = product => {
+    const quantity = Math.max(0, Math.floor(Number(cartQuantities[product.id]) || 0));
+    if (!quantity) return;
+    const price = Number(product.price) || 0;
+    const fee = Number(product.fee) || 0;
+    rows.push([exportDate, product.name, quantity, yen(price), yen(fee), yen((price + fee) * quantity)]);
+  };
+  const addGiftRow = (name, quantity) => {
+    if (!(quantity > 0)) return;
+    rows.push([exportDate, '【贈】' + name, quantity, '', '', '']);
+  };
+
+  const categories = [...new Set(PRODUCTS.map(product => product.category || '其他'))];
+  const eventAIsMerchCategory = category => ['直購商品', '可抱盒商品', '隨機商品'].includes(category);
+  let mealCount = 0;
+  let dessertCount = 0;
+  let merchBookAmount = 0;
+  let eventBSpending = 0;
+  PRODUCTS.forEach(product => {
+    const quantity = Math.max(0, Math.floor(Number(cartQuantities[product.id]) || 0));
+    if (activeEvent.id === 'eventA') {
+      if (product.category === '餐點') mealCount += quantity;
+      if (product.category === '甜點' || product.category === '飲品') dessertCount += quantity;
+      if (eventAIsMerchCategory(product.category)) merchBookAmount += (Number(product.price) || 0) * quantity;
+    }
+    if (activeEvent.id === 'eventB') eventBSpending += (Number(product.price) || 0) * quantity;
+  });
+
+  categories.forEach(category => {
+    PRODUCTS.filter(product => (product.category || '其他') === category).forEach(addProductRow);
+    if (activeEvent.id === 'eventA') {
+      if (category === '餐點') addGiftRow('主餐特典', mealCount);
+      if (category === '甜點') addGiftRow('杯墊特典', dessertCount);
+      // 將跨多個周邊分類計算的特典，放在最後一個相關分類的底部。
+      if (category === '隨機商品') {
+        addGiftRow('滿額特典', Math.floor(merchBookAmount / 500));
+        addGiftRow('燈箱特典', merchBookAmount >= 2500 ? 1 : 0);
+      }
+    }
+    if (activeEvent.id === 'eventB' && category === categories[categories.length - 1]) {
+      addGiftRow('滿額特典', Math.floor(eventBSpending / 3000));
+    }
+  });
+
+  const csv = '\uFEFF' + rows.map(row => row.map(csvEscape).join(',')).join('\r\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = activeEvent.name.replace(/[\\/:*?"<>|]/g, '_') + '_' + exportDate.replace(/\//g, '-') + '.csv';
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
+$('exportCsv').addEventListener('click', exportCurrentEventCsv);
+
+function preparePrintDetails() {
+  const rows = [...document.querySelectorAll('.sumrow')];
+  const isZero = row => {
+    const value = row.querySelector('strong')?.textContent.replace(/[^0-9.]/g, '') || '';
+    return /^0+(?:\.0+)?$/.test(value);
+  };
+  rows.forEach(row => row.classList.toggle('print-zero', isZero(row)));
+  const subtotalRow = rows.find(row => row.querySelector('#subtotal'));
+  const otherRows = rows.filter(row => row !== subtotalRow);
+  if (subtotalRow && otherRows.every(isZero)) subtotalRow.classList.add('print-zero');
+}
+function clearPrintDetails() {
+  document.querySelectorAll('.sumrow.print-zero').forEach(row => row.classList.remove('print-zero'));
+}
+window.addEventListener('beforeprint', preparePrintDetails);
+window.addEventListener('afterprint', clearPrintDetails);
+$('print').onclick = () => window.print();
+let exportImageRootHandle = null;
+async function getExportImageDataUrl(blob) {
+  return await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(reader.error || new Error('讀取商品圖片失敗。'));
+    reader.readAsDataURL(blob);
+  });
+}
+async function inlineLocalImagesForExport(clonedDoc) {
+  const images = Array.from(clonedDoc.querySelectorAll('img'));
+  const getFileAtPath = async (root, parts) => {
+    let dir = root;
+    for (const part of parts.slice(0, -1)) dir = await dir.getDirectoryHandle(part);
+    return await dir.getFileHandle(parts[parts.length - 1]);
+  };
+  for (const img of images) {
+    const raw = img.getAttribute('src') || img.src || '';
+    if (!raw || /^(data:|blob:|https?:|https?:\/\/)/i.test(raw)) continue;
+    const clean = decodeURIComponent(raw.split(/[?#]/)[0]).replace(/\\/g, '/').replace(/^\.\//, '').replace(/^\//, '');
+    if (!clean) continue;
+    const parts = clean.split('/').filter(Boolean);
+    const candidates = [parts];
+    // Users may select either the project folder (which contains img/) or the img folder itself.
+    if (parts[0] === 'img') candidates.push(parts.slice(1));
+    else candidates.push(['img', ...parts]);
+    let lastError;
+    let file = null;
+    for (const candidate of candidates) {
+      try {
+        const fileHandle = await getFileAtPath(exportImageRootHandle, candidate);
+        file = await fileHandle.getFile();
+        break;
+      } catch (err) { lastError = err; }
+    }
+    if (file) {
+      img.removeAttribute('crossorigin');
+      img.src = await getExportImageDataUrl(file);
+      await new Promise(resolve => { if (img.complete) resolve(); else { img.onload = resolve; img.onerror = resolve; } });
+    } else {
+      console.error('無法從所選資料夾找到商品圖片：', raw, lastError);
+      throw new Error('找不到商品縮圖：' + clean + '。請在圖片匯出時選擇包含 img 資料夾的工作台資料夾，或直接選擇 img 資料夾。');
+    }
+  }
+}
+$('exportImage').onclick = async () => {
+  const button = $('exportImage');
+  const previousView = $('viewCart').style.display === 'block' ? 'cart' : 'products';
+  const originalLabel = button.textContent;
+  const originalImageSources = [];
+  button.disabled = true;
+  button.textContent = '正在生成圖片…';
+  switchView('cart');
+  preparePrintDetails();
+  try {
+    // Choose the existing workbench folder once; no BAT/server or image upload is needed.
+    if (!exportImageRootHandle) {
+      if (!window.showDirectoryPicker) throw new Error('此瀏覽器不支援讀取本機圖片資料夾，請使用最新版 Chrome 或 Edge。');
+      exportImageRootHandle = await window.showDirectoryPicker({mode: 'read'});
+    }
+    // Inline local image bytes in the live DOM BEFORE html2canvas clones it.
+    // html2canvas's async onclone callback can otherwise race image loading and leave file:// images tainting the canvas.
+    const liveImages = Array.from(document.querySelectorAll('.wrap img'));
+    for (const img of liveImages) {
+      const raw = img.getAttribute('src') || '';
+      if (!raw || /^(data:|blob:|https?:\/\/)/i.test(raw)) continue;
+      originalImageSources.push({img, src: raw, crossOrigin: img.getAttribute('crossorigin')});
+    }
+    await inlineLocalImagesForExport(document);
+    await Promise.all(liveImages.map(async img => {
+      if (img.decode) { try { await img.decode(); } catch (_) {} }
+    }));
+
+    if (typeof window.html2canvas !== 'function') {
+      await new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+        script.onload = resolve;
+        script.onerror = () => reject(new Error('圖片元件載入失敗，請確認網路連線後重試。'));
+        document.head.appendChild(script);
+      });
+    }
+    const target = document.querySelector('.wrap');
+    const canvas = await window.html2canvas(target, {
+      backgroundColor: '#ffffff',
+      scale: 2,
+      useCORS: true,
+      allowTaint: false,
+      logging: false,
+      // Render at the intended A4-like content width, not the live desktop workbench width.
+      windowWidth: 794,
+      width: 794,
+      onclone: (clonedDoc) => {
+        // The clone now inherits data:image URLs from the already-inlined source DOM.
+        clonedDoc.querySelectorAll('style').forEach(style => {
+          style.textContent = style.textContent.replace(/@media\s+print\s*\{/g, '@media all {');
+        });
+        const clonedWrap = clonedDoc.querySelector('.wrap');
+        if (clonedWrap) {
+          clonedWrap.style.setProperty('width', '794px', 'important');
+          clonedWrap.style.setProperty('min-width', '0', 'important');
+          clonedWrap.style.setProperty('max-width', '794px', 'important');
+          clonedWrap.style.setProperty('box-sizing', 'border-box', 'important');
+          clonedWrap.style.setProperty('margin', '0 auto', 'important');
+          clonedWrap.style.setProperty('padding', '18px', 'important');
+        }
+        const clonedButton = clonedDoc.getElementById('exportImage');
+        if (clonedButton) clonedButton.textContent = originalLabel;
+      }
+    });
+    // Crop the empty white tail below the rendered content. Keep a small bottom margin.
+    let exportCanvas = canvas;
+    try {
+      const ctx = canvas.getContext('2d', { willReadFrequently: true });
+      const w = canvas.width, h = canvas.height;
+      const image = ctx.getImageData(0, 0, w, h);
+      const data = image.data;
+      const scanStep = Math.max(1, Math.floor(w / 1400));
+      let lastContentY = h - 1;
+      let consecutiveBlank = 0;
+      for (let y = h - 1; y >= 0; y--) {
+        let nonBlank = 0;
+        for (let x = 0; x < w; x += scanStep) {
+          const i = (y * w + x) * 4;
+          if (data[i + 3] > 8 && (data[i] < 246 || data[i + 1] < 246 || data[i + 2] < 246)) nonBlank++;
+        }
+        if (nonBlank > Math.max(2, Math.floor((w / scanStep) * 0.001))) {
+          lastContentY = y;
+          break;
+        }
+        consecutiveBlank++;
+      }
+      const bottomPadding = Math.round(18 * (window.devicePixelRatio || 1) * 2);
+      const croppedHeight = Math.min(h, Math.max(1, lastContentY + bottomPadding));
+      if (croppedHeight < h) {
+        exportCanvas = document.createElement('canvas');
+        exportCanvas.width = w;
+        exportCanvas.height = croppedHeight;
+        exportCanvas.getContext('2d').drawImage(canvas, 0, 0, w, croppedHeight, 0, 0, w, croppedHeight);
+      }
+    } catch (cropError) { console.warn('自動裁切底部空白失敗，改用完整圖片：', cropError); }
+    const blob = await new Promise((resolve, reject) => exportCanvas.toBlob(result => result ? resolve(result) : reject(new Error('無法建立 PNG 圖片。')), 'image/png'));
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    const date = new Date();
+    const dateText = date.getFullYear() + '-' + String(date.getMonth()+1).padStart(2,'0') + '-' + String(date.getDate()).padStart(2,'0');
+    link.href = url;
+    link.download = activeEvent.name.replace(/[\\/:*?"<>|]/g, '_') + '_' + dateText + '.png';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1500);
+  } catch (error) {
+    alert('圖片生成失敗：' + (error && error.message ? error.message : String(error)));
+  } finally {
+    // Restore the original thumbnail URLs so the workbench remains unchanged after export.
+    for (const item of originalImageSources) {
+      if (item.crossOrigin === null) item.img.removeAttribute('crossorigin');
+      else item.img.setAttribute('crossorigin', item.crossOrigin);
+      item.img.setAttribute('src', item.src);
+    }
+    clearPrintDetails();
+    switchView(previousView);
+    button.disabled = false;
+    button.textContent = originalLabel;
+  }
+};
+
+renderEvents();
+$('eventTitle').textContent=activeEvent.name+'｜商品清單';
+const cats=[...new Set(PRODUCTS.map(p=>p.category).filter(Boolean))];cats.forEach(c=>{const o=node('option','',c);o.value=c;
+$('category').append(o)});
+render();
+calculate();
+</script></body>
+</html>
